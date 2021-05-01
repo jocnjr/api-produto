@@ -23,12 +23,15 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+      - name: Build and push Docker images
+        uses: docker/build-push-action@v2.4.0
+        with:
+          # Build's context is the set of files located in the specified PATH or URL
+          context: ./src
+          # Path to the Dockerfile
+          file: ./src/Dockerfile
+          push: true
+          tags: |
+            josevma/api-produto:latest
+            josevma/api-produto:${{github.run_number}}
