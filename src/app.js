@@ -10,21 +10,22 @@ const NodeHog = require('nodehog');
 const config = require('./config/system-life');
 const promBundle = require("express-prom-bundle");
 
-const metricsMiddleware = promBundle({ 
-        includeMethod: true, 
-        includePath: true, 
-        customLabels: 
-            { 
-                project_version: '1.0' 
-            } 
-    });
+const metricsMiddleware = promBundle({
+    includeMethod: true,
+    includePath: true,
+    customLabels: {
+        project_version: '1.0'
+    }
+});
 
 app.use(metricsMiddleware);
 app.use(config.middlewares.healthMid);
 app.use('/', config.routers);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 
 const serverStatus = () => {
     return {
@@ -71,7 +72,7 @@ var connectWithRetry = function () {
 
 connectWithRetry();
 
-var port = process.env.SERVER_PORT || 8080;
+var port = process.env.SERVER_PORT || 3000;
 
 app.listen(port, () => {
     console.log('Servidor rodando na porta ' + port);
