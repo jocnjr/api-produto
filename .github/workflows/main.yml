@@ -66,5 +66,5 @@ jobs:
       - name: Deploy API Service to DO
         uses: Azure/k8s-deploy@v1.3
         with:
-          image: josevma/api-produto:${{github.run_number}}
+          images: josevma/api-produto:${{github.run_number}}
           manifests: k8s/api/deployment.yaml
